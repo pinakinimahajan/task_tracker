@@ -1,57 +1,89 @@
+// Initialize tasks from localStorage or empty array
+let tasks = JSON.parse(localStorage.getItem('proTasks')) || [];
+let currentFilter = 'all';
+
 const taskInput = document.getElementById('taskInput');
 const addBtn = document.getElementById('addBtn');
 const taskList = document.getElementById('taskList');
-const taskCount = document.getElementById('taskCount');
+const taskCountDisplay = document.getElementById('taskCount');
 
-let tasks = JSON.parse(localStorage.getItem('myTasks')) || [];
-
-function updateUI() {
+function render() {
     taskList.innerHTML = '';
-    tasks.forEach((task, index) => {
+    
+    // Logic to filter tasks based on selection
+    const filteredTasks = tasks.filter(task => {
+        if (currentFilter === 'active') return !task.completed; // Pending
+        if (currentFilter === 'completed') return task.completed; // Done
+        return true; // All
+    });
+
+    filteredTasks.forEach((task, index) => {
         const li = document.createElement('li');
+        
+        // Find the actual index in the main tasks array
+        const mainIndex = tasks.indexOf(task);
+
         li.innerHTML = `
-            <span class="${task.completed ? 'completed' : ''}" onclick="toggleTask(${index})">
+            <span class="task-text ${task.completed ? 'done' : ''}" onclick="toggleTask(${mainIndex})">
                 ${task.text}
             </span>
-            <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+            <div class="btn-group">
+                <button class="del-btn" onclick="removeTask(${mainIndex})">✕</button>
+            </div>
         `;
         taskList.appendChild(li);
     });
-    taskCount.innerText = `Tasks: ${tasks.length} / 15`;
-    localStorage.setItem('myTasks', JSON.stringify(tasks));
+
+    // Update the count: shows total tasks out of 15
+    taskCountDisplay.innerText = `${tasks.length} / 15 tasks`;
+    
+    // Save to localStorage
+    localStorage.setItem('proTasks', JSON.stringify(tasks));
 }
 
 function addTask() {
-    const text = taskInput.value.trim();
-    
-    if (text === "") {
+    const val = taskInput.value.trim();
+    if (val === "") {
         alert("Task cannot be empty!");
         return;
     }
     if (tasks.length >= 15) {
-        alert("Maximum 15 tasks allowed.");
+        alert("Goal limit reached (15 max)!");
         return;
     }
 
-    tasks.push({ text: text, completed: false });
+    tasks.push({ text: val, completed: false });
     taskInput.value = '';
-    updateUI();
+    render();
 }
 
 function toggleTask(index) {
     tasks[index].completed = !tasks[index].completed;
-    updateUI();
+    render();
 }
 
-function deleteTask(index) {
+function removeTask(index) {
     tasks.splice(index, 1);
-    updateUI();
+    render();
 }
 
+// Filter Button Logic
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // Remove active class from all buttons and add to the clicked one
+        document.querySelector('.filter-btn.active').classList.remove('active');
+        e.target.classList.add('active');
+        
+        currentFilter = e.target.dataset.filter;
+        render();
+    });
+});
+
+// Event Listeners
 addBtn.addEventListener('click', addTask);
 taskInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') addTask();
 });
 
-// Initial load
-updateUI();
+// Initial render
+render();
