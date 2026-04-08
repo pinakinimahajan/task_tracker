@@ -1,141 +1,97 @@
-/* Unique Glassmorphism Design */
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.2);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --primary-gradient: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-    --accent: #6e8efb;
-}
-
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    /* Vibrant animated-style background */
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-    background: var(--glass-bg);
-    backdrop-filter: blur(15px); /* This creates the frost effect */
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px;
-    width: 380px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    color: white;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 350px;
 }
 
 h1 {
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 30px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.input-group {
-    display: flex;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 5px;
-    margin-bottom: 20px;
-    border: 1px solid var(--glass-border);
+.task-input {
+  display: flex;
+  margin-bottom: 15px;
 }
 
-input {
-    background: transparent;
-    border: none;
-    padding: 12px;
-    color: white;
-    flex: 1;
-    outline: none;
+.task-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  outline: none;
 }
 
-input::placeholder { color: rgba(255,255,255,0.7); }
-
-#addBtn {
-    background: white;
-    color: var(--accent);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#addBtn:hover {
-    background: var(--accent);
-    color: white;
-    box-shadow: 0 0 15px rgba(255,255,255,0.4);
+.task-input button {
+  padding: 10px;
+  border: none;
+  background: #4CAF50;
+  color: white;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
 }
 
 .filters {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
 }
 
-.filter-btn {
-    flex: 1;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--glass-border);
-    color: white;
-    padding: 8px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: 0.3s;
+.filters button {
+  border: none;
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-.filter-btn.active {
-    background: white;
-    color: #333;
+.filters button.active {
+  background: #4CAF50;
+  color: white;
 }
 
-ul { list-style: none; padding: 0; }
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 li {
-    background: rgba(255, 255, 255, 0.15);
-    margin-bottom: 12px;
-    padding: 15px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: transform 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 6px;
 }
 
-li:hover { transform: translateX(5px); background: rgba(255,255,255,0.2); }
-
-.task-text { cursor: pointer; flex: 1; }
-.done { text-decoration: line-through; opacity: 0.6; }
-
-.del-btn {
-    background: rgba(255, 77, 77, 0.2);
-    color: #ff4d4d;
-    border: 1px solid rgba(255, 77, 77, 0.3);
-    padding: 5px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
+li.completed span {
+  text-decoration: line-through;
+  color: #888;
 }
 
-#taskCount {
-    text-align: center;
-    font-size: 12px;
-    opacity: 0.8;
+.actions button {
+  margin-left: 5px;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+.actions .complete { background: #4CAF50; color: white; }
+.actions .edit { background: #2196F3; color: white; }
+.actions .delete { background: #f44336; color: white; }
